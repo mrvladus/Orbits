@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.190909 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.690608 )
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0.984375, 0, 1 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Line2D
+
+export var length = 50
+var point = Vector2()
+
+func _physics_process(delta):
+	global_position = Vector2.ZERO
+	global_rotation = 0
+	point = get_parent().global_position
+	add_point(point)
+	while get_point_count() > length:
+		remove_point(0)
+"
+
+[node name="Trail" type="Line2D"]
+show_behind_parent = true
+width_curve = SubResource( 2 )
+default_color = Color( 0.968627, 1, 0, 1 )
+gradient = SubResource( 1 )
+script = SubResource( 3 )
